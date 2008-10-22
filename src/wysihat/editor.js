@@ -6,11 +6,14 @@ WysiHat.Editor = {
    *
    *  Creates a new editor for the textarea.
    **/
-  attach: function(textarea) {
+  attach: function(textarea, options) {
+    options = $H(options);
     textarea = $(textarea);
     textarea.hide();
 
-    return WysiHat.iFrame.create(textarea, function(editArea) {
+    var model = options.get('model') || WysiHat.iFrame;
+
+    return model.create(textarea, function(editArea) {
       var document = editArea.getDocument();
       var window = editArea.getWindow();
 
@@ -51,7 +54,7 @@ WysiHat.Editor = {
       editArea.observe("wysihat:change", function(event) {
         event.target.save();
       });
-
+      
       editArea.focus();
     });
   }
