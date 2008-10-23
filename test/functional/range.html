@@ -88,10 +88,11 @@
 
       var range = getRange();
       range.setStart($('content'), 2);
+      range.setEnd($('content'), 2);
 
       if (range.startOffset == 2 &&
           range.endOffset == 2 &&
-          range.collapsed == false)
+          range.collapsed == true)
         $('testSetStart').passed('Pass');
       else
         $('testSetStart').failed('Fail');
@@ -109,6 +110,7 @@
       reloadFixtures();
 
       var range = getRange();
+      range.setStart($('content'), 1);
       range.setEnd($('content'), 2);
 
       if (range.startOffset == 1 &&
@@ -132,6 +134,7 @@
 
       var range = getRange();
       range.setStartBefore($('content'));
+      range.setEnd($('content'), 2);
 
       if (range.startOffset == 1 &&
           range.endOffset == 2 &&
@@ -198,6 +201,7 @@
 
       var range = getRange();
       range.setEndAfter($('content'));
+      range.setStart($('content'), 1);
 
       if (range.startOffset == 1 &&
           range.endOffset == 2 &&
@@ -219,6 +223,8 @@
       reloadFixtures();
 
       var range = getRange();
+      range.setStart($('content'), 1);
+      range.setEnd($('content'), 2);
       range.collapse(true);
 
       if (range.startOffset == 1 &&
@@ -241,6 +247,8 @@
       reloadFixtures();
 
       var range = getRange();
+      range.setStart($('content'), 1);
+      range.setEnd($('content'), 2);
       range.collapse(false);
 
       if (range.startOffset == 2 &&
@@ -399,7 +407,7 @@
       range.selectNode($('lorem'));
       range.surroundContents(node);
 
-      if ($('wrapper').innerHTML == "<strong id=\"lorem\">Lorem ipsum</strong>")
+      if ($('wrapper') && $('wrapper').innerHTML == "<strong id=\"lorem\">Lorem ipsum</strong>")
         $('testSurroundContents').passed('Pass');
       else
         $('testSurroundContents').failed('Fail');

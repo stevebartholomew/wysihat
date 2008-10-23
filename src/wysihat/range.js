@@ -32,12 +32,12 @@ if (Prototype.Browser.IE) {
   }
 
   if (!document.createRange) {
-    document.createRange = function () {
+    document.createRange = function() {
       return new Range(this);
-    }
+    };
   }
 
-  Object.extend(Range.prototype, {
+  Object.extend(Range.prototype, (function() {
     function cloneContents() {
       _processContents(this, this.CLONE_CONTENTS);
     }
@@ -56,7 +56,7 @@ if (Prototype.Browser.IE) {
 
         return clone;
 
-      } catch (e) {}
+      } catch (e) {};
     }
 
     function collapse(toStart) {
@@ -101,7 +101,7 @@ if (Prototype.Browser.IE) {
             return _compareBoundaryPoints(this, this.endContainer, this.endOffset, sourceRange.startContainer, sourceRange.startOffset);
             break;
         }
-      } catch (e) {}
+      } catch (e) {};
     }
 
     function deleteContents() {
@@ -117,7 +117,7 @@ if (Prototype.Browser.IE) {
     function extractContents() {
       try {
         return _processContents(this, this.EXTRACT_CONTENTS);
-      } catch (e) {}
+      } catch (e) {};
     }
 
     function insertNode(newNode) {
@@ -160,8 +160,8 @@ if (Prototype.Browser.IE) {
         this.startContainer = refNode;
         this.startOffset    = offset;
 
-        // If one boundary-point of a Range is set to have a root container 
-        // other than the current one for the Range, the Range is collapsed to 
+        // If one boundary-point of a Range is set to have a root container
+        // other than the current one for the Range, the Range is collapsed to
         // the new position. This enforces the restriction that both boundary-
         // points of a Range must have the same root container.
         endRootContainer = this.endContainer;
@@ -175,9 +175,9 @@ if (Prototype.Browser.IE) {
         if (startRootContainer != endRootContainer) {
           this.collapse(true);
         } else {
-          // The start position of a Range is guaranteed to never be after the 
-          // end position. To enforce this restriction, if the start is set to 
-          // be at a position after the end, the Range is collapsed to that 
+          // The start position of a Range is guaranteed to never be after the
+          // end position. To enforce this restriction, if the start is set to
+          // be at a position after the end, the Range is collapsed to that
           // position.
           if (_compareBoundaryPoints(this, this.startContainer, this.startOffset, this.endContainer, this.endOffset) > 0) {
             this.collapse(true);
@@ -203,8 +203,8 @@ if (Prototype.Browser.IE) {
         this.endContainer = refNode;
         this.endOffset    = offset;
 
-        // If one boundary-point of a Range is set to have a root container 
-        // other than the current one for the Range, the Range is collapsed to 
+        // If one boundary-point of a Range is set to have a root container
+        // other than the current one for the Range, the Range is collapsed to
         // the new position. This enforces the restriction that both boundary-
         // points of a Range must have the same root container.
         endRootContainer = this.endContainer;
@@ -218,7 +218,7 @@ if (Prototype.Browser.IE) {
         if (startRootContainer != endRootContainer) {
           this.collapse(false);
         } else {
-          // ... Similarly, if the end is set to be at a position before the 
+          // ... Similarly, if the end is set to be at a position before the
           // start, the Range is collapsed to that position.
           if (_compareBoundaryPoints(this, this.startContainer, this.startOffset, this.endContainer, this.endOffset) > 0) {
             this.collapse(false);
@@ -259,9 +259,9 @@ if (Prototype.Browser.IE) {
 
     function _compareBoundaryPoints(range, containerA, offsetA, containerB, offsetB) {
       var c, offsetC, n, cmnRoot, childA;
-      // In the first case the boundary-points have the same container. A is before B 
-      // if its offset is less than the offset of B, A is equal to B if its offset is 
-      // equal to the offset of B, and A is after B if its offset is greater than the 
+      // In the first case the boundary-points have the same container. A is before B
+      // if its offset is less than the offset of B, A is equal to B if its offset is
+      // equal to the offset of B, and A is after B if its offset is greater than the
       // offset of B.
       if (containerA == containerB) {
         if (offsetA == offsetB) {
@@ -274,8 +274,8 @@ if (Prototype.Browser.IE) {
       }
 
 
-      // In the second case a child node C of the container of A is an ancestor 
-      // container of B. In this case, A is before B if the offset of A is less than or 
+      // In the second case a child node C of the container of A is an ancestor
+      // container of B. In this case, A is before B if the offset of A is less than or
       // equal to the index of the child node C and A is after B otherwise.
       c = containerB;
       while (c && c.parentNode != containerA) {
@@ -295,8 +295,8 @@ if (Prototype.Browser.IE) {
         }
       }
 
-      // In the third case a child node C of the container of B is an ancestor container 
-      // of A. In this case, A is before B if the index of the child node C is less than 
+      // In the third case a child node C of the container of B is an ancestor container
+      // of A. In this case, A is before B if the index of the child node C is less than
       // the offset of B and A is after B otherwise.
       c = containerA;
       while (c && c.parentNode != containerB) {
@@ -316,14 +316,14 @@ if (Prototype.Browser.IE) {
         }
       }
 
-      // In the fourth case, none of three other cases hold: the containers of A and B 
-      // are siblings or descendants of sibling nodes. In this case, A is before B if 
+      // In the fourth case, none of three other cases hold: the containers of A and B
+      // are siblings or descendants of sibling nodes. In this case, A is before B if
       // the container of A is before the container of B in a pre-order traversal of the
       // Ranges' context tree and A is after B otherwise.
       cmnRoot = range._commonAncestorContainer(containerA, containerB);
       childA = containerA;
       while (childA && childA.parentNode != cmnRoot) {
-        childA = childA.parentNode;  
+        childA = childA.parentNode;
       }
       if (!childA) {
         childA = cmnRoot;
@@ -399,7 +399,7 @@ if (Prototype.Browser.IE) {
         var next, prev;
         var processStart, processEnd;
         if (range.collapsed) {
-          return;
+          return null;
         }
 
         cmnRoot = range.commonAncestorContainer;
@@ -652,7 +652,7 @@ if (Prototype.Browser.IE) {
 
         return fragment;
 
-      } catch (e) {}  
+      } catch (e) {};
     }
 
     function _nodeIndex(refNode) {
@@ -684,11 +684,11 @@ if (Prototype.Browser.IE) {
       cloneContents:   cloneContents,
 
       insertNode:       insertNode,
-      surroundContents: surroundContents
+      surroundContents: surroundContents,
 
       cloneRange: cloneRange,
       toString:   toString,
-      detach:     detach,
+      detach:     detach
     };
-  });
+  })());
 }
