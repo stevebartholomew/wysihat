@@ -157,6 +157,7 @@
 
       var range = getRange();
       range.setStartAfter($('content'));
+      range.setEnd($('content'), 2);
 
       if (range.startOffset == 2 &&
           range.endOffset == 2 &&
@@ -404,10 +405,10 @@
       var node = new Element('span', {id: 'wrapper'});
 
       var range = getRange();
-      range.selectNode($('lorem'));
+      range.selectNodeContents($('lorem'));
       range.surroundContents(node);
 
-      if ($('wrapper') && $('wrapper').innerHTML == "<strong id=\"lorem\">Lorem ipsum</strong>")
+      if ($('lorem').innerHTML == "<span id=\"wrapper\">Lorem ipsum</span>")
         $('testSurroundContents').passed('Pass');
       else
         $('testSurroundContents').failed('Fail');
