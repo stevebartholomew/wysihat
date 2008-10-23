@@ -28,8 +28,20 @@
   </style>
 
   <script type="text/javascript">
+    function getSel() {
+      if (window.getSelection)
+        return window.getSelection();
+      else
+        return document.selection;
+    }
+
     function getRange() {
-      return window.getSelection().getRangeAt(0);
+      var selection = getSel();
+      if (selection.getRangeAt) {
+        return selection.getRangeAt(0);
+      } else {
+        return new Range(document);
+      }
     }
 
     function reloadFixtures() {
@@ -38,9 +50,11 @@
       var range = document.createRange();
       range.selectNode($('content'));
 
-      var selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
+      try {
+        var selection = getSel();
+        selection.removeAllRanges();
+        selection.addRange(range);
+      } catch (e) {};
     }
 
     Event.observe(window, 'load', reloadFixtures);

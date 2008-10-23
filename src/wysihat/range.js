@@ -17,7 +17,7 @@ if (Prototype.Browser.IE) {
     this.endOffset      = 0;
 
     this.collapsed = true;
-    this.commonAncestorContainer = _commonAncestorContainer(this.startContainer, this.endContainer);
+    this.commonAncestorContainer = this._commonAncestorContainer(this.startContainer, this.endContainer);
 
     this.detached = false;
 
@@ -688,7 +688,9 @@ if (Prototype.Browser.IE) {
 
       cloneRange: cloneRange,
       toString:   toString,
-      detach:     detach
+      detach:     detach,
+
+      _commonAncestorContainer: _commonAncestorContainer
     };
   })());
 }
