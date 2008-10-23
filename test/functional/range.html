@@ -60,7 +60,6 @@
     });
 
     function log(obj) {
-      console.log(obj);
       var line, all = [];
       for (prop in obj) {
         if (typeof obj[prop] == 'function' || /^[A-Z]|[XY]$/.test(prop)) continue;
@@ -74,7 +73,9 @@
 <body>
   <h1>WysiHat functional tests for the Range class</h1>
 
-  <div id="content"></div>
+  <div>
+    <div id="content"></div>
+  </div>
 
   <div id="log">log empty</div>
 
@@ -89,7 +90,7 @@
       range.setStart($('content'), 2);
 
       if (range.startOffset == 2 &&
-          range.endOffset == 4 &&
+          range.endOffset == 2 &&
           range.collapsed == false)
         $('testSetStart').passed('Pass');
       else
@@ -110,7 +111,7 @@
       var range = getRange();
       range.setEnd($('content'), 2);
 
-      if (range.startOffset == 3 &&
+      if (range.startOffset == 1 &&
           range.endOffset == 2 &&
           range.collapsed == false)
         $('testSetEnd').passed('Pass');
@@ -132,8 +133,8 @@
       var range = getRange();
       range.setStartBefore($('content'));
 
-      if (range.startOffset == 3 &&
-          range.endOffset == 4 &&
+      if (range.startOffset == 1 &&
+          range.endOffset == 2 &&
           range.collapsed == false)
         $('testSetStartBefore').passed('Pass');
       else
@@ -154,8 +155,8 @@
       var range = getRange();
       range.setStartAfter($('content'));
 
-      if (range.startOffset == 4 &&
-          range.endOffset == 4 &&
+      if (range.startOffset == 2 &&
+          range.endOffset == 2 &&
           range.collapsed == true)
         $('testSetStartAfter').passed('Pass');
       else
@@ -176,8 +177,8 @@
       var range = getRange();
       range.setEndBefore($('content'));
 
-      if (range.startOffset == 3 &&
-          range.endOffset == 3 &&
+      if (range.startOffset == 1 &&
+          range.endOffset == 1 &&
           range.collapsed == true)
         $('testSetEndBefore').passed('Pass');
       else
@@ -198,8 +199,8 @@
       var range = getRange();
       range.setEndAfter($('content'));
 
-      if (range.startOffset == 3 &&
-          range.endOffset == 4 &&
+      if (range.startOffset == 1 &&
+          range.endOffset == 2 &&
           range.collapsed == false)
         $('testSetEndAfter').passed('Pass');
       else
@@ -220,8 +221,8 @@
       var range = getRange();
       range.collapse(true);
 
-      if (range.startOffset == 3 &&
-          range.endOffset == 3 &&
+      if (range.startOffset == 1 &&
+          range.endOffset == 1 &&
           range.collapsed == true)
         $('testCollapseToStart').passed('Pass');
       else
@@ -242,8 +243,8 @@
       var range = getRange();
       range.collapse(false);
 
-      if (range.startOffset == 4 &&
-          range.endOffset == 4 &&
+      if (range.startOffset == 2 &&
+          range.endOffset == 2 &&
           range.collapsed == true)
         $('testCollapseToEnd').passed('Pass');
       else
