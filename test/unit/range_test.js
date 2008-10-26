@@ -20,15 +20,21 @@ new Test.Unit.Runner({
         return new Range(document);
     }
 
+    function selectRange(range) {
+      if (Prototype.Browser.IE) {
+        var selection = getSel();
+        selection.removeAllRanges();
+        selection._addRange(range);
+      } else {
+        var selection = getSel();
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }
+
     var range = document.createRange();
     range.selectNode($('content'));
-
-    try {
-      // TODO: Need to write this for IE selection
-      var selection = getSel();
-      selection.removeAllRanges();
-      selection.addRange(range);
-    } catch (e) {};
+    selectRange(range);
 
     this.range = getRange();
   },

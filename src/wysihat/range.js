@@ -693,4 +693,231 @@ if (Prototype.Browser.IE) {
       _commonAncestorContainer: _commonAncestorContainer
     };
   })());
+
+  function SelectionImpl() {
+    this.ranges = [];
+  }
+
+  Object.extend(SelectionImpl.prototype, (function() {
+    function removeAllRanges() {
+      this.ranges = [];
+    }
+
+    function _addRange(r) {
+      if (r.startContainer.nodeType != Node.TEXT_NODE) {
+        var start = this._getRightStart(r.startContainer);
+        var startOffset = 0;
+      } else {
+        var start = r.startContainer;
+        var startOffset = r.startOffset;
+      }
+      if (r.endContainer.nodeType != Node.TEXT_NODE) {
+        var end = this._getRightEnd(r.endContainer);
+        var endOffset = end.data.length;
+      } else {
+        var end = r.endContainer;
+        var endOffset = r.endOffset;
+      }
+
+      var rStart = this._selectStart(start, startOffset);
+      var rEnd   = this._selectEnd(end,endOffset);
+      rStart.setEndPoint('EndToStart', rEnd);
+      rStart.select();
+      document.selection._selectedRange = r;
+    }
+
+    function _getRightStart(start, offset) {
+      if (start.nodeType != Node.TEXT_NODE) {
+        if (start.nodeType == Node.ELEMENT_NODE) {
+          start = start.childNodes(offset);
+        }
+        return getNextTextNode(start);
+      }
+    }
+
+    function _getRightEnd(end, offset) {
+      if (end.nodeType != Node.TEXT_NODE) {
+        if (end.nodeType == Node.ELEMENT_NODE) {
+          end = end.childNodes(offset);
+        }
+        return getPreviousTextNode(end);
+      }
+    }
+
+    function _selectStart(start, offset) {
+      var r = document.body.createTextRange();
+      if (start.nodeType == Node.TEXT_NODE) {
+        var moveCharacters = offset, node = start;
+        var moveToNode = null, collapse = true;
+        while (node.previousSibling) {
+          switch (node.previousSibling.nodeType) {
+            case Node.ELEMENT_NODE:
+              moveToNode = node.previousSibling;
+              collapse = false;
+              break;
+            case Node.TEXT_NODE:
+              moveCharacters += node.previousSibling.data.length;
+          }
+          // if a right candidate is found, we escape the while
+          if (moveToNode != null) {
+            break;
+          }
+          node = node.previousSibling;
+        }
+        // no right candidate is found, so we select the parent node
+        // of the start node (which is an Element node always, since
+        // start node is a Text node).
+        if (moveToNode == null) {
+          moveToNode = start.parentNode;
+        }
+
+        r.moveToElementText(moveToNode);
+        r.collapse(collapse);
+        r.move('Character', moveCharacters);
+        return r;
+      }
+    }
+
+    function _selectEnd(end, offset) {
+      var r = document.body.createTextRange(), node = end;
+      if (end.nodeType == 3) {
+        // text nodes
+        var moveCharacters = end.data.length - offset;
+        var moveToNode = null, collapse = false;
+        while (node.nextSibling) {
+          switch (node.nextSibling.nodeType) {
+            case 1:
+              // Right candidate node for moving the Range to is found
+              moveToNode = node.nextSibling;
+              collapse   = true;
+              break;
+            case 3:
+              moveCharacters += node.nextSibling.data.length;
+              break;
+          }
+          // if a right candidate is found, we escape the while
+          if (moveToNode != null) {
+            break;
+          }
+          node = node.nextSibling;
+        }
+        // no right candidate is found, so we select the parent node
+        // of the start node (which is an Element node always, since
+        // start node is a Text node).
+        if (moveToNode == null) {
+          moveToNode = end.parentNode;
+          collapse   = false;
+        }
+
+        // block level elements have a closing space after collapsing
+        switch (moveToNode.nodeName.toLowerCase()) {
+          case 'p':
+          case 'div':
+          case 'h1':
+          case 'h2':
+          case 'h3':
+          case 'h4':
+          case 'h5':
+          case 'h6':
+          // need some extension
+            moveCharacters++;
+        }
+
+        r.moveToElementText(moveToNode);
+        r.collapse(collapse);
+
+        r.move('Character', -moveCharacters);
+        return r;
+      }
+    }
+
+    function getPreviousTextNode(node) {
+      // Loop throught next siblings searching for a suitable textNode
+      var stack = [];
+      var current = null;
+      // Loop through all the next siblings of the incoming Node
+      while (node) {
+        stack = [];
+        current = node;
+        // Loop through the stack
+        while (current) {
+          // Loop up in the tree with the first child
+          while (current) {
+          // Check if our current node is a suitable text node
+          if (current.nodeType == 3 && current.data.replace(/^\s+|\s+$/, '').length) {
+            return current;
+          }
+          // Check if our current node has a previous sibling. If
+          // we can't find a suitable textnode in the direct path,
+          // we can still use this previous sibling.
+          if (current.previousSibling) {
+            stack.push (current.previousSibling);
+          }
+          current = current.lastChild;
+        }
+        current = stack.pop();
+        }
+        node = node.previousSibling;
+      }
+      return null;
+    }
+
+    function getNextTextNode(node) {
+      // Loop throught next siblings searching for a suitable textNode
+      var stack = [];
+      var current = null;
+      //var sibling = node;
+      // Loop through all the next siblings of the incoming Node
+      while (node) {
+        stack = [];
+        current = node;
+        // Loop through the stack
+        while (current) {
+          // Loop up in the tree with the first child
+          while (current) {
+            // Check if our current node is a suitable text node
+            if (current.nodeType == 3 && current.data.replace(/^\s+|\s+$/, '').length) {
+                return current;
+            }
+            // Check if our current node has a next sibling. If
+            // we can't find a suitable textnode in the direct path,
+            // we can still use this next sibling.
+            if (current.nextSibling) {
+                stack.push (current.nextSibling);
+            }
+            current = current.firstChild;
+          }
+          current = stack.pop();
+        }
+        node = node.nextSibling;
+      }
+      return null;
+    }
+
+    return {
+      removeAllRanges: removeAllRanges,
+      _addRange: _addRange,
+      _getRightStart: _getRightStart,
+      _getRightEnd: _getRightEnd,
+      _selectStart: _selectStart,
+      _selectEnd: _selectEnd
+    };
+  })());
+
+  Selection = new function() {
+    var instance = null;
+    this.getInstance = function() {
+      if (instance == null) {
+        return (instance = new SelectionImpl());
+      } else {
+        return instance;
+      }
+    }
+  }
+
+  if (!window.getSelection) {
+    window.getSelection = function() {
+      return Selection.getInstance();
+    }
+  }
 }
