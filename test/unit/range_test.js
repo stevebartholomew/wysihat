@@ -194,6 +194,12 @@ new Test.Unit.Runner({
     this.range.selectNodeContents($('lorem'));
     this.range.surroundContents(node);
 
-    runner.assertEqual($('lorem').innerHTML, "<span id=\"wrapper\">Lorem ipsum</span>", "innerHTML");
+    var expected;
+    if (Prototype.Browser.IE)
+      expected = "<SPAN id=wrapper>Lorem ipsum</SPAN>";
+    else
+      expected = "<span id=\"wrapper\">Lorem ipsum</span>";
+
+    runner.assertEqual($('lorem').innerHTML, expected, "innerHTML");
   }
 });
