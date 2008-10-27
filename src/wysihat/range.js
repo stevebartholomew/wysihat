@@ -131,11 +131,9 @@ if (Prototype.Browser.IE) {
         var n, newText, offset;
 
         switch (this.startContainer.nodeType) {
-          case 4:
-          case 3:
-
+          case Node.CDATA_SECTION_NODE:
+          case Node.TEXT_NODE:
             newText = this.startContainer.splitText(this.startOffset);
-
             this.startContainer.parentNode.insertBefore(newNode, newText);
             break;
           default:
@@ -387,10 +385,10 @@ if (Prototype.Browser.IE) {
 
     function _offsetInCharacters(node) {
       switch (node.nodeType) {
-        case 4:
-        case 8:
-        case 1:
-        case Node.PROCESSION_INSTRUCTION_NODE:
+        case Node.CDATA_SECTION_NODE:
+        case Node.COMMENT_NODE:
+        case Node.ELEMENT_NODE:
+        case Node.PROCESSING_INSTRUCTION_NODE:
           return true;
         default:
           return false;
@@ -431,9 +429,9 @@ if (Prototype.Browser.IE) {
 
         if (range.startContainer == range.endContainer) {
           switch (range.startContainer.nodeType) {
-            case 4:
-            case 8:
-            case 3:
+            case Node.CDATA_SECTION_NODE:
+            case Node.COMMENT_NODE:
+            case Node.TEXT_NODE:
               if (action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) {
                 c = range.startContainer.cloneNode();
                 c.deleteData(range.endOffset, range.startContainer.data.length - range.endOffset);
@@ -444,7 +442,7 @@ if (Prototype.Browser.IE) {
                 range.startContainer.deleteData(range.startOffset, range.endOffset - range.startOffset);
               }
               break;
-            case 7:
+            case Node.PROCESSING_INSTRUCTION_NODE:
               //
               break;
             default:
@@ -472,9 +470,9 @@ if (Prototype.Browser.IE) {
 
         if (range.startContainer != cmnRoot) {
           switch (range.startContainer.nodeType) {
-            case 4:
-            case 8:
-            case 3:
+            case Node.CDATA_SECTION_NODE:
+            case Node.COMMENT_NODE:
+            case Node.TEXT_NODE:
               if (action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) {
                 c = range.startContainer.cloneNode(true);
                 c.deleteData(0, range.startOffset);
@@ -484,7 +482,7 @@ if (Prototype.Browser.IE) {
                 range.startContainer.deleteData(range.startOffset, range.startContainer.data.length - range.startOffset);
               }
               break;
-            case 7:
+            case Node.PROCESSING_INSTRUCTION_NODE:
               //
               break;
             default:
@@ -534,9 +532,9 @@ if (Prototype.Browser.IE) {
 
         if (range.endContainer != cmnRoot) {
           switch (range.endContainer.nodeType) {
-            case 4:
-            case 8:
-            case 3:
+            case Node.CDATA_SECTION_NODE:
+            case Node.COMMENT_NODE:
+            case Node.TEXT_NODE:
               if (action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) {
                 c = range.endContainer.cloneNode(true);
                 c.deleteData(range.endOffset, range.endContainer.data.length - range.endOffset);
@@ -546,7 +544,7 @@ if (Prototype.Browser.IE) {
                 range.endContainer.deleteData(0, range.endOffset);
               }
               break;
-            case 7:
+            case Node.PROCESSING_INSTRUCTION_NODE:
               //
               break;
             default:
@@ -801,12 +799,12 @@ if (Prototype.Browser.IE) {
         var moveToNode = null, collapse = false;
         while (node.nextSibling) {
           switch (node.nextSibling.nodeType) {
-            case 1:
+            case Node.ELEMENT_NODE:
               // Right candidate node for moving the Range to is found
               moveToNode = node.nextSibling;
               collapse   = true;
               break;
-            case 3:
+            case Node.TEXT_NODE:
               moveCharacters += node.nextSibling.data.length;
               break;
           }
