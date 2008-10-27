@@ -56,7 +56,9 @@ if (Prototype.Browser.IE) {
 
         return clone;
 
-      } catch (e) {};
+      } catch (e) {
+        return null;
+      };
     }
 
     function collapse(toStart) {
@@ -102,6 +104,8 @@ if (Prototype.Browser.IE) {
             break;
         }
       } catch (e) {};
+
+      return null;
     }
 
     function deleteContents() {
@@ -117,7 +121,9 @@ if (Prototype.Browser.IE) {
     function extractContents() {
       try {
         return _processContents(this, this.EXTRACT_CONTENTS);
-      } catch (e) {};
+      } catch (e) {
+        return null;
+      };
     }
 
     function insertNode(newNode) {
@@ -352,6 +358,7 @@ if (Prototype.Browser.IE) {
       }
 
       // can never happen...
+      return null;
     }
 
     function _commonAncestorContainer(containerA, containerB) {
@@ -652,7 +659,9 @@ if (Prototype.Browser.IE) {
 
         return fragment;
 
-      } catch (e) {};
+      } catch (e) {
+        return null;
+      };
     }
 
     function _nodeIndex(refNode) {
@@ -732,6 +741,8 @@ if (Prototype.Browser.IE) {
           start = start.childNodes(offset);
         }
         return getNextTextNode(start);
+      } else {
+        return null;
       }
     }
 
@@ -741,6 +752,8 @@ if (Prototype.Browser.IE) {
           end = end.childNodes(offset);
         }
         return getPreviousTextNode(end);
+      } else {
+        return null;
       }
     }
 
@@ -775,6 +788,8 @@ if (Prototype.Browser.IE) {
         r.collapse(collapse);
         r.move('Character', moveCharacters);
         return r;
+      } else {
+        return null;
       }
     }
 
@@ -829,6 +844,8 @@ if (Prototype.Browser.IE) {
         r.move('Character', -moveCharacters);
         return r;
       }
+
+      return null;
     }
 
     function getPreviousTextNode(node) {
@@ -912,12 +929,12 @@ if (Prototype.Browser.IE) {
       } else {
         return instance;
       }
-    }
-  }
+    };
+  };
 
   if (!window.getSelection) {
     window.getSelection = function() {
       return Selection.getInstance();
-    }
+    };
   }
 }
