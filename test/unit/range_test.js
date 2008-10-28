@@ -43,9 +43,9 @@ new Test.Unit.Runner({
     this.range.setStart($('content'), 2);
     this.range.setEnd($('content'), 2);
 
-    runner.assertEqual(this.range.startOffset, 2, "startOffset");
-    runner.assertEqual(this.range.endOffset, 2, "endOffset");
-    runner.assertEqual(this.range.collapsed, true, "collapsed");
+    runner.assertEqual(2, this.range.startOffset, "startOffset");
+    runner.assertEqual(2, this.range.endOffset, "endOffset");
+    runner.assertEqual(true, this.range.collapsed, "collapsed");
   },
 
   testSetEnd: function() {
@@ -54,9 +54,9 @@ new Test.Unit.Runner({
     this.range.setStart($('content'), 1);
     this.range.setEnd($('content'), 2);
 
-    runner.assertEqual(this.range.startOffset, 1, "startOffset");
-    runner.assertEqual(this.range.endOffset, 2, "endOffset");
-    runner.assertEqual(this.range.collapsed, false, "collapsed");
+    runner.assertEqual(1, this.range.startOffset, "startOffset");
+    runner.assertEqual(2, this.range.endOffset, "endOffset");
+    runner.assertEqual(false, this.range.collapsed, "collapsed");
   },
 
   testSetStartBefore: function() {
@@ -65,9 +65,9 @@ new Test.Unit.Runner({
     this.range.setStartBefore($('content'));
     this.range.setEnd($('content'), 2);
 
-    runner.assertEqual(this.range.startOffset, 1, "startOffset");
-    runner.assertEqual(this.range.endOffset, 2, "endOffset");
-    runner.assertEqual(this.range.collapsed, false, "collapsed");
+    runner.assertEqual(1, this.range.startOffset, "startOffset");
+    runner.assertEqual(2, this.range.endOffset, "endOffset");
+    runner.assertEqual(false, this.range.collapsed, "collapsed");
   },
 
   testSetStartAfter: function() {
@@ -76,9 +76,9 @@ new Test.Unit.Runner({
     this.range.setStartAfter($('content'));
     this.range.setEnd($('content'), 2);
 
-    runner.assertEqual(this.range.startOffset, 2, "startOffset");
-    runner.assertEqual(this.range.endOffset, 2, "endOffset");
-    runner.assertEqual(this.range.collapsed, true, "collapsed");
+    runner.assertEqual(2, this.range.startOffset, "startOffset");
+    runner.assertEqual(2, this.range.endOffset, "endOffset");
+    runner.assertEqual(true, this.range.collapsed, "collapsed");
   },
 
   testSetEndBefore: function() {
@@ -86,9 +86,9 @@ new Test.Unit.Runner({
 
     this.range.setEndBefore($('content'));
 
-    runner.assertEqual(this.range.startOffset, 1, "startOffset");
-    runner.assertEqual(this.range.endOffset, 1, "endOffset");
-    runner.assertEqual(this.range.collapsed, true, "collapsed");
+    runner.assertEqual(1, this.range.startOffset, "startOffset");
+    runner.assertEqual(1, this.range.endOffset, "endOffset");
+    runner.assertEqual(true, this.range.collapsed, "collapsed");
   },
 
   testSetEndAfter: function() {
@@ -97,9 +97,9 @@ new Test.Unit.Runner({
     this.range.setEndAfter($('content'));
     this.range.setStart($('content'), 1);
 
-    runner.assertEqual(this.range.startOffset, 1, "startOffset");
-    runner.assertEqual(this.range.endOffset, 2, "endOffset");
-    runner.assertEqual(this.range.collapsed, false, "collapsed");
+    runner.assertEqual(1, this.range.startOffset, "startOffset");
+    runner.assertEqual(2, this.range.endOffset, "endOffset");
+    runner.assertEqual(false, this.range.collapsed, "collapsed");
   },
 
   testCollapseToStart: function() {
@@ -131,9 +131,9 @@ new Test.Unit.Runner({
 
     this.range.selectNode($('lorem'));
 
-    runner.assertEqual(this.range.startOffset, 0, "startOffset");
-    runner.assertEqual(this.range.endOffset, 1, "endOffset");
-    runner.assertEqual(this.range.collapsed, false, "collapsed");
+    runner.assertEqual(0, this.range.startOffset, "startOffset");
+    runner.assertEqual(1, this.range.endOffset, "endOffset");
+    runner.assertEqual(false, this.range.collapsed, "collapsed");
   },
 
   testSelectNodeContents: function() {
@@ -141,9 +141,9 @@ new Test.Unit.Runner({
 
     this.range.selectNodeContents($('lorem'));
 
-    runner.assertEqual(this.range.startOffset, 0, "startOffset");
-    runner.assertEqual(this.range.endOffset, 1, "endOffset");
-    runner.assertEqual(this.range.collapsed, false, "collapsed");
+    runner.assertEqual(0, this.range.startOffset, "startOffset");
+    runner.assertEqual(1, this.range.endOffset, "endOffset");
+    runner.assertEqual(false, this.range.collapsed, "collapsed");
   },
 
   testDeleteContents: function() {
@@ -152,7 +152,7 @@ new Test.Unit.Runner({
     this.range.selectNodeContents($('lorem'));
     this.range.deleteContents();
 
-    runner.assertEqual($('lorem').innerHTML, "", "innerHTML");
+    runner.assertEqual("", $('lorem').innerHTML, "innerHTML");
   },
 
   testExtractContents: function() {
@@ -161,17 +161,17 @@ new Test.Unit.Runner({
     this.range.selectNodeContents($('lorem'));
     var contents = this.range.extractContents();
 
-    runner.assertEqual($('lorem').innerHTML, "", "innerHTML");
+    runner.assertEqual("", $('lorem').innerHTML, "innerHTML");
 
     // IE document does not have any useful methods. Everyone else can just
     // read textContent, IE needs to append the fragment to another element
     // and read its innerHTML
     if (contents.textContent) {
-      runner.assertEqual(contents.textContent, "Lorem ipsum", "textContent");
+      runner.assertEqual("Lorem ipsum", contents.textContent, "textContent");
     } else {
       var e = new Element('div');
       e.appendChild(contents);
-      runner.assertEqual(e.innerHTML, "Lorem ipsum", "textContent");
+      runner.assertEqual("Lorem ipsum", e.innerHTML, "textContent");
     }
   },
 
@@ -181,17 +181,17 @@ new Test.Unit.Runner({
     this.range.selectNodeContents($('lorem'));
     var contents = this.range.cloneContents();
 
-    runner.assertEqual($('lorem').innerHTML, "Lorem ipsum", "innerHTML");
+    runner.assertEqual("Lorem ipsum", $('lorem').innerHTML, "innerHTML");
 
     // IE document does not have any useful methods. Everyone else can just
     // read textContent, IE needs to append the fragment to another element
     // and read its innerHTML
     if (contents.textContent) {
-      runner.assertEqual(contents.textContent, "Lorem ipsum", "textContent");
+      runner.assertEqual("Lorem ipsum", contents.textContent, "textContent");
     } else {
       var e = new Element('div');
       e.appendChild(contents);
-      runner.assertEqual(e.innerHTML, "Lorem ipsum", "textContent");
+      runner.assertEqual("Lorem ipsum", e.innerHTML, "textContent");
     }
   },
 
@@ -203,7 +203,7 @@ new Test.Unit.Runner({
     this.range.selectNode($('lorem'));
     this.range.insertNode(node);
 
-    runner.assertEqual($('inserted').innerHTML, "inserted!", "innerHTML");
+    runner.assertEqual("inserted!", $('inserted').innerHTML, "innerHTML");
   },
 
   testSurrondContents: function() {
@@ -220,6 +220,6 @@ new Test.Unit.Runner({
     else
       expected = "<span id=\"wrapper\">Lorem ipsum</span>";
 
-    runner.assertEqual($('lorem').innerHTML, expected, "innerHTML");
+    runner.assertEqual(expected, $('lorem').innerHTML, "innerHTML");
   }
 });
