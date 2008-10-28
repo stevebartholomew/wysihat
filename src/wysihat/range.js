@@ -25,11 +25,11 @@ if (Prototype.Browser.IE) {
     this.START_TO_END   = 1;
     this.END_TO_END     = 2;
     this.END_TO_START   = 3;
-
-    this.CLONE_CONTENTS   = 0;
-    this.DELETE_CONTENTS  = 1;
-    this.EXTRACT_CONTENTS = 2;
   }
+
+  Range.CLONE_CONTENTS   = 0;
+  Range.DELETE_CONTENTS  = 1;
+  Range.EXTRACT_CONTENTS = 2;
 
   if (!document.createRange) {
     document.createRange = function() {
@@ -39,7 +39,7 @@ if (Prototype.Browser.IE) {
 
   Object.extend(Range.prototype, (function() {
     function cloneContents() {
-      return _processContents(this, this.CLONE_CONTENTS);
+      return _processContents(this, Range.CLONE_CONTENTS);
     }
 
     function cloneRange() {
@@ -112,7 +112,7 @@ if (Prototype.Browser.IE) {
 
     function deleteContents() {
       try {
-        _processContents(this, this.DELETE_CONTENTS);
+        _processContents(this, Range.DELETE_CONTENTS);
       } catch (e) {}
     }
 
@@ -122,7 +122,7 @@ if (Prototype.Browser.IE) {
 
     function extractContents() {
       try {
-        return _processContents(this, this.EXTRACT_CONTENTS);
+        return _processContents(this, Range.EXTRACT_CONTENTS);
       } catch (e) {
         return null;
       };
@@ -425,7 +425,7 @@ if (Prototype.Browser.IE) {
           }
         }
 
-        if (action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) {
+        if (action == Range.EXTRACT_CONTENTS || action == Range.CLONE_CONTENTS) {
           fragment = range.ownerDocument.createDocumentFragment();
         }
 
@@ -434,13 +434,13 @@ if (Prototype.Browser.IE) {
             case Node.CDATA_SECTION_NODE:
             case Node.COMMENT_NODE:
             case Node.TEXT_NODE:
-              if (action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) {
+              if (action == Range.EXTRACT_CONTENTS || action == Range.CLONE_CONTENTS) {
                 c = range.startContainer.cloneNode();
                 c.deleteData(range.endOffset, range.startContainer.data.length - range.endOffset);
                 c.deleteData(0, range.startOffset);
                 fragment.appendChild(c);
               }
-              if (action == range.EXTRACT_CONTENTS || action == range.DELETE_CONTENTS) {
+              if (action == Range.EXTRACT_CONTENTS || action == Range.DELETE_CONTENTS) {
                 range.startContainer.deleteData(range.startOffset, range.endOffset - range.startOffset);
               }
               break;
@@ -454,9 +454,9 @@ if (Prototype.Browser.IE) {
               }
               while (n && i < range.endOffset) {
                 next = n.nextSibling;
-                if (action == range.EXTRACT_CONTENTS) {
+                if (action == Range.EXTRACT_CONTENTS) {
                   fragment.appendChild(n);
-                } else if (action == range.CLONE_CONTENTS) {
+                } else if (action == Range.CLONE_CONTENTS) {
                   fragment.appendChild(n.cloneNode());
                 } else {
                   range.startContainer.removeChild(n);
@@ -475,12 +475,12 @@ if (Prototype.Browser.IE) {
             case Node.CDATA_SECTION_NODE:
             case Node.COMMENT_NODE:
             case Node.TEXT_NODE:
-              if (action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) {
+              if (action == Range.EXTRACT_CONTENTS || action == Range.CLONE_CONTENTS) {
                 c = range.startContainer.cloneNode(true);
                 c.deleteData(0, range.startOffset);
                 leftContents = c;
               }
-              if (action == range.EXTRACT_CONTENTS || action == range.DELETE_CONTENTS) {
+              if (action == Range.EXTRACT_CONTENTS || action == Range.DELETE_CONTENTS) {
                 range.startContainer.deleteData(range.startOffset, range.startContainer.data.length - range.startOffset);
               }
               break;
@@ -488,7 +488,7 @@ if (Prototype.Browser.IE) {
               //
               break;
             default:
-              if (action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) {
+              if (action == Range.EXTRACT_CONTENTS || action == Range.CLONE_CONTENTS) {
                 leftContents = range.startContainer.cloneNode(false);
               }
               n = range.startContainer.firstChild;
@@ -497,9 +497,9 @@ if (Prototype.Browser.IE) {
               }
               while (n && i < range.endOffset) {
                 next = n.nextSibling;
-                if (action == range.EXTRACT_CONTENTS) {
+                if (action == Range.EXTRACT_CONTENTS) {
                   fragment.appendChild(n);
-                } else if (action == range.CLONE_CONTENTS) {
+                } else if (action == Range.CLONE_CONTENTS) {
                   fragment.appendChild(n.cloneNode());
                 } else {
                   range.startContainer.removeChild(n);
@@ -512,7 +512,7 @@ if (Prototype.Browser.IE) {
           leftParent = range.startContainer.parentNode;
           n = range.startContainer.nextSibling;
           for(; leftParent != cmnRoot; leftParent = leftParent.parentNode) {
-            if (action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) {
+            if (action == Range.EXTRACT_CONTENTS || action == Range.CLONE_CONTENTS) {
               leftContentsParent = leftParent.cloneNode(false);
               leftContentsParent.appendChild(leftContents);
               leftContents = leftContentsParent;
@@ -520,9 +520,9 @@ if (Prototype.Browser.IE) {
 
             for (; n; n = next) {
               next = n.nextSibling;
-              if (action == range.EXTRACT_CONTENTS) {
+              if (action == Range.EXTRACT_CONTENTS) {
                 leftContents.appendChild(n);
-              } else if (action == range.CLONE_CONTENTS) {
+              } else if (action == Range.CLONE_CONTENTS) {
                 leftContents.appendChild(n.cloneNode(true));
               } else {
                 leftParent.removeChild(n);
@@ -537,12 +537,12 @@ if (Prototype.Browser.IE) {
             case Node.CDATA_SECTION_NODE:
             case Node.COMMENT_NODE:
             case Node.TEXT_NODE:
-              if (action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) {
+              if (action == Range.EXTRACT_CONTENTS || action == Range.CLONE_CONTENTS) {
                 c = range.endContainer.cloneNode(true);
                 c.deleteData(range.endOffset, range.endContainer.data.length - range.endOffset);
                 rightContents = c;
               }
-              if (action == range.EXTRACT_CONTENTS || action == range.DELETE_CONTENTS) {
+              if (action == Range.EXTRACT_CONTENTS || action == Range.DELETE_CONTENTS) {
                 range.endContainer.deleteData(0, range.endOffset);
               }
               break;
@@ -550,7 +550,7 @@ if (Prototype.Browser.IE) {
               //
               break;
             default:
-              if (action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) {
+              if (action == Range.EXTRACT_CONTENTS || action == Range.CLONE_CONTENTS) {
                 rightContents = range.endContainer.cloneNode(false);
               }
               n = range.endContainer.firstChild;
@@ -564,9 +564,9 @@ if (Prototype.Browser.IE) {
                 }
                 for (; n; n = prev) {
                   prev = n.previousSibling;
-                  if (action == range.EXTRACT_CONTENTS) {
+                  if (action == Range.EXTRACT_CONTENTS) {
                     rightContents.insertBefore(n, rightContents.firstChild);
-                  } else if (action == CLONE_CONTENTS) {
+                  } else if (action == Range.CLONE_CONTENTS) {
                     rightContents.insertBefore(n.cloneNode(True), rightContents.firstChild);
                   } else {
                     range.endContainer.removeChild(n);
@@ -578,7 +578,7 @@ if (Prototype.Browser.IE) {
           rightParent = range.endContainer.parentNode;
           n = range.endContainer.previousSibling;
           for(; rightParent != cmnRoot; rightParent = rightParent.parentNode) {
-            if (action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) {
+            if (action == Range.EXTRACT_CONTENTS || action == Range.CLONE_CONTENTS) {
               rightContentsParent = rightContents.cloneNode(false);
               rightContentsParent.appendChild(rightContents);
               rightContents = rightContentsParent;
@@ -586,9 +586,9 @@ if (Prototype.Browser.IE) {
 
             for (; n; n = prev) {
               prev = n.previousSibling;
-              if (action == range.EXTRACT_CONTENTS) {
+              if (action == Range.EXTRACT_CONTENTS) {
                 rightContents.insertBefore(n, rightContents.firstChild);
-              } else if (action == range.CLONE_CONTENTS) {
+              } else if (action == Range.CLONE_CONTENTS) {
                 rightContents.appendChild(n.cloneNode(true), rightContents.firstChild);
               } else {
                 rightParent.removeChild(n);
@@ -622,16 +622,16 @@ if (Prototype.Browser.IE) {
           }
         }
 
-        if ((action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) && leftContents) {
+        if ((action == Range.EXTRACT_CONTENTS || action == Range.CLONE_CONTENTS) && leftContents) {
           fragment.appendChild(leftContents);
         }
 
         if (processStart) {
           for (n = processStart; n && n != processEnd; n = next) {
             next = n.nextSibling;
-            if (action == range.EXTRACT_CONTENTS) {
+            if (action == Range.EXTRACT_CONTENTS) {
               fragment.appendChild(n);
-            } else if (action == range.CLONE_CONTENTS) {
+            } else if (action == Range.CLONE_CONTENTS) {
               fragment.appendChild(n.cloneNode(true));
             } else {
               cmnRoot.removeChild(n);
@@ -639,11 +639,11 @@ if (Prototype.Browser.IE) {
           }
         }
 
-        if ((action == range.EXTRACT_CONTENTS || action == range.CLONE_CONTENTS) && rightContents) {
+        if ((action == Range.EXTRACT_CONTENTS || action == Range.CLONE_CONTENTS) && rightContents) {
           fragment.appendChild(rightContents);
         }
 
-        if (action == range.EXTRACT_CONTENTS || action == range.DELETE_CONTENTS) {
+        if (action == Range.EXTRACT_CONTENTS || action == Range.DELETE_CONTENTS) {
           if (!partialStart && !partialEnd) {
             range.collapse(true);
           } else if (partialStart) {
