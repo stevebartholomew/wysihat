@@ -73,7 +73,7 @@ if (Prototype.Browser.IE) {
       }
     }
 
-    function compareBoundaryPoints(how, sourceRange) {
+    function compareBoundaryPoints(compareHow, sourceRange) {
       try {
         var cmnSelf, cmnSource, rootSelf, rootSource;
 
@@ -91,7 +91,7 @@ if (Prototype.Browser.IE) {
           rootSource = rootSource.parentNode;
         }
 
-        switch (how) {
+        switch (compareHow) {
           case this.START_TO_START:
             return _compareBoundaryPoints(this, this.startContainer, this.startOffset, sourceRange.startContainer, sourceRange.startOffset);
             break;
@@ -128,7 +128,7 @@ if (Prototype.Browser.IE) {
       };
     }
 
-    function insertNode(n) {
+    function insertNode(newNode) {
       try {
         var n, newText, offset;
 
@@ -136,7 +136,7 @@ if (Prototype.Browser.IE) {
           case Node.CDATA_SECTION_NODE:
           case Node.TEXT_NODE:
             newText = this.startContainer.splitText(this.startOffset);
-            this.startContainer.parentNode.insertBefore(n, newText);
+            this.startContainer.parentNode.insertBefore(newNode, newText);
             break;
           default:
             if (this.startContainer.childNodes.length == 0) {
@@ -144,26 +144,26 @@ if (Prototype.Browser.IE) {
             } else {
               offset = this.startContainer.childNodes(this.startOffset);
             }
-            this.startContainer.insertBefore(n, offset);
+            this.startContainer.insertBefore(newNode, offset);
         }
       } catch (e) {}
     }
 
-    function selectNode(n) {
-      this.setStartBefore(n);
-      this.setEndAfter(n);
+    function selectNode(refNode) {
+      this.setStartBefore(refNode);
+      this.setEndAfter(refNode);
     }
 
-    function selectNodeContents(n) {
-      this.setStart(n, 0);
-      this.setEnd(n, n.childNodes.length);
+    function selectNodeContents(refNode) {
+      this.setStart(refNode, 0);
+      this.setEnd(refNode, refNode.childNodes.length);
     }
 
-    function setStart(parent, offset) {
+    function setStart(refNode, offset) {
       try {
         var endRootContainer, startRootContainer;
 
-        this.startContainer = parent;
+        this.startContainer = refNode;
         this.startOffset    = offset;
 
         // If one boundary-point of a Range is set to have a root container
@@ -196,17 +196,17 @@ if (Prototype.Browser.IE) {
       } catch (e) {}
     }
 
-    function setStartAfter(node) {
-      this.setStart(node.parentNode, _nodeIndex(node) + 1);
+    function setStartAfter(refNode) {
+      this.setStart(refNode.parentNode, _nodeIndex(refNode) + 1);
     }
 
-    function setStartBefore(node) {
-      this.setStart(node.parentNode, _nodeIndex(node));
+    function setStartBefore(refNode) {
+      this.setStart(refNode.parentNode, _nodeIndex(refNode));
     }
 
-    function setEnd(parent, offset) {
+    function setEnd(refNode, offset) {
       try {
-        this.endContainer = parent;
+        this.endContainer = refNode;
         this.endOffset    = offset;
 
         // If one boundary-point of a Range is set to have a root container
@@ -238,12 +238,12 @@ if (Prototype.Browser.IE) {
       } catch (e) {}
     }
 
-    function setEndAfter(node) {
-      this.setEnd(node.parentNode, _nodeIndex(node) + 1);
+    function setEndAfter(refNode) {
+      this.setEnd(refNode.parentNode, _nodeIndex(refNode) + 1);
     }
 
-    function setEndBefore(node) {
-      this.setEnd(node.parentNode, _nodeIndex(node));
+    function setEndBefore(refNode) {
+      this.setEnd(refNode.parentNode, _nodeIndex(refNode));
     }
 
     function surroundContents(newParent) {
@@ -664,11 +664,11 @@ if (Prototype.Browser.IE) {
       };
     }
 
-    function _nodeIndex(node) {
+    function _nodeIndex(refNode) {
       var nodeIndex = 0;
-      while (node.previousSibling) {
+      while (refNode.previousSibling) {
         nodeIndex++;
-        node = node.previousSibling;
+        refNode = refNode.previousSibling;
       }
       return nodeIndex;
     }
