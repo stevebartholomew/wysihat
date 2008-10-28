@@ -39,7 +39,7 @@ if (Prototype.Browser.IE) {
 
   Object.extend(Range.prototype, (function() {
     function cloneContents() {
-      _processContents(this, this.CLONE_CONTENTS);
+      return _processContents(this, this.CLONE_CONTENTS);
     }
 
     function cloneRange() {

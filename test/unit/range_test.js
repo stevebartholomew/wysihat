@@ -162,7 +162,17 @@ new Test.Unit.Runner({
     var contents = this.range.extractContents();
 
     runner.assertEqual($('lorem').innerHTML, "", "innerHTML");
-    runner.assertEqual(contents.textContent, "Lorem ipsum", "textContent");
+
+    // IE document does not have any useful methods. Everyone else can just
+    // read textContent, IE needs to append the fragment to another element
+    // and read its innerHTML
+    if (contents.textContent) {
+      runner.assertEqual(contents.textContent, "Lorem ipsum", "textContent");
+    } else {
+      var e = new Element('div');
+      e.appendChild(contents);
+      runner.assertEqual(e.innerHTML, "Lorem ipsum", "textContent");
+    }
   },
 
   testCloneContents: function() {
@@ -172,7 +182,17 @@ new Test.Unit.Runner({
     var contents = this.range.cloneContents();
 
     runner.assertEqual($('lorem').innerHTML, "Lorem ipsum", "innerHTML");
-    runner.assertEqual(contents.textContent, "Lorem ipsum", "textContent");
+
+    // IE document does not have any useful methods. Everyone else can just
+    // read textContent, IE needs to append the fragment to another element
+    // and read its innerHTML
+    if (contents.textContent) {
+      runner.assertEqual(contents.textContent, "Lorem ipsum", "textContent");
+    } else {
+      var e = new Element('div');
+      e.appendChild(contents);
+      runner.assertEqual(e.innerHTML, "Lorem ipsum", "textContent");
+    }
   },
 
   testInsertNode: function() {
