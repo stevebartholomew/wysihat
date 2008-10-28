@@ -29,7 +29,7 @@ end
 desc "Builds the distribution, runs the JavaScript unit tests and collects their results."
 task :test => [:build_tests, :dist, :test_units]
 
-require 'test/lib/jstest'
+require 'vendor/jstest'
 desc "Runs all the JavaScript unit tests and collects the results"
 JavaScriptTestTask.new(:test_units) do |t|
   testcases        = ENV['TESTCASES']
@@ -50,8 +50,14 @@ JavaScriptTestTask.new(:test_units) do |t|
   end
 end
 
-task :build_tests do
+task :build_tests => [:clean_test_files] do
   Dir["test/unit/*_test.js"].each do |test_file|
     TestBuilder.new(test_file).render
+  end
+end
+
+task :clean_test_files do
+  Dir["test/unit/*_test.html"].each do |test_file|
+    FileUtils.rm_rf(test_file)
   end
 end
