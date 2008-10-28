@@ -109,9 +109,9 @@ new Test.Unit.Runner({
     this.range.setEnd($('content'), 2);
     this.range.collapse(true);
 
-    runner.assertEqual(this.range.startOffset, 1, "startOffset");
-    runner.assertEqual(this.range.endOffset, 1, "endOffset");
-    runner.assertEqual(this.range.collapsed, true, "collapsed");
+    runner.assertEqual(1, this.range.startOffset, "startOffset");
+    runner.assertEqual(1, this.range.endOffset, "endOffset");
+    runner.assertEqual(true, this.range.collapsed, "collapsed");
   },
 
   testCollapseToEnd: function() {
@@ -121,9 +121,9 @@ new Test.Unit.Runner({
     this.range.setEnd($('content'), 2);
     this.range.collapse(false);
 
-    runner.assertEqual(this.range.startOffset, 2, "startOffset");
-    runner.assertEqual(this.range.endOffset, 2, "endOffset");
-    runner.assertEqual(this.range.collapsed, true, "collapsed");
+    runner.assertEqual(2, this.range.startOffset, "startOffset");
+    runner.assertEqual(2, this.range.endOffset, "endOffset");
+    runner.assertEqual(true, this.range.collapsed, "collapsed");
   },
 
   testSelectNode: function() {

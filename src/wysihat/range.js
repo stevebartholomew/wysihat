@@ -63,11 +63,13 @@ if (Prototype.Browser.IE) {
 
     function collapse(toStart) {
       if (toStart) {
-        this.endContainer   = this.startContainer;
-        this.endOffset      = this.startOffset;
+        this.endContainer = this.startContainer;
+        this.endOffset    = this.startOffset;
+        this.collapsed    = true;
       } else {
         this.startContainer = this.endContainer;
         this.startOffset    = this.endOffset;
+        this.collapsed      = true;
       }
     }
 
