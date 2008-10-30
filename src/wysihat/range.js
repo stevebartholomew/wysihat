@@ -5,7 +5,7 @@
  * implementation exists.
  *
  * @author Jorgen Horstink <mail@jorgenhorstink.nl>
- */
+ **/
 
 if (Prototype.Browser.IE) {
   function Range(ownerDocument) {
@@ -41,7 +41,7 @@ if (Prototype.Browser.IE) {
     /**
      * Range#cloneContents() -> DocumentFragment
      *  Duplicates the contents of a Range
-    **/
+     **/
     function cloneContents() {
       return _processContents(this, Range.CLONE_CONTENTS);
     }
@@ -50,7 +50,7 @@ if (Prototype.Browser.IE) {
      * Range#cloneRange() -> Range
      *  Produces a new Range whose boundary-points are equal to the
      *  boundary-points of the Range.
-    **/
+     **/
     function cloneRange() {
       try {
         var clone = new Range(this.ownerDocument);
@@ -75,7 +75,7 @@ if (Prototype.Browser.IE) {
      *  - toStart (Boolean): If TRUE, collapses the Range onto its start;
      *      if FALSE, collapses it onto its end.
      *  Collapse a Range onto one of its boundary-points
-    **/
+     **/
     function collapse(toStart) {
       if (toStart) {
         this.endContainer = this.startContainer;
@@ -94,7 +94,7 @@ if (Prototype.Browser.IE) {
      *  - sourceRange (Range): The Range on which this current Range is
      *      compared to.
      *  Compare the boundary-points of two Ranges in a document.
-    **/
+     **/
     function compareBoundaryPoints(compareHow, sourceRange) {
       try {
         var cmnSelf, cmnSource, rootSelf, rootSource;
@@ -137,7 +137,7 @@ if (Prototype.Browser.IE) {
      *  Removes the contents of a Range from the containing document or
      *  document fragment without returning a reference to the
      *  removed content.
-    **/
+     **/
     function deleteContents() {
       try {
         _processContents(this, Range.DELETE_CONTENTS);
@@ -149,7 +149,7 @@ if (Prototype.Browser.IE) {
      *  Called to indicate that the Range is no longer in use and that the
      *  implementation may relinquish any resources associated with
      *  this Range.
-    **/
+     **/
     function detach() {
       this.detached = true;
     }
@@ -158,7 +158,7 @@ if (Prototype.Browser.IE) {
      * Range#extractContents() -> DocumentFragment
      *  Moves the contents of a Range from the containing document or
      *  document fragment to a new DocumentFragment.
-    **/
+     **/
     function extractContents() {
       try {
         return _processContents(this, Range.EXTRACT_CONTENTS);
@@ -178,7 +178,7 @@ if (Prototype.Browser.IE) {
      *  be automatically merged. If the node to be inserted is a
      *  DocumentFragment node, the children will be inserted rather than the
      *  DocumentFragment node itself.
-    **/
+     **/
     function insertNode(newNode) {
       try {
         var n, newText, offset;
@@ -204,7 +204,7 @@ if (Prototype.Browser.IE) {
      * Range#selectNode(refNode) -> undefined
      *  - refNode (Node): The node to select.
      *  Select a node and its contents
-    **/
+     **/
     function selectNode(refNode) {
       this.setStartBefore(refNode);
       this.setEndAfter(refNode);
@@ -214,7 +214,7 @@ if (Prototype.Browser.IE) {
      * Range#selectNodeContents(refNode) -> undefined
      *  - refNode (Node): Node to select from
      *  Select the contents within a node
-    **/
+     **/
     function selectNodeContents(refNode) {
       this.setStart(refNode, 0);
       this.setEnd(refNode, refNode.childNodes.length);
@@ -226,7 +226,7 @@ if (Prototype.Browser.IE) {
      *      from null.
      *  - offset (Integer): The endOffset value.
      *  Sets the attributes describing the end of a Range.
-    **/
+     **/
     function setStart(refNode, offset) {
       try {
         var endRootContainer, startRootContainer;
@@ -268,7 +268,7 @@ if (Prototype.Browser.IE) {
      * Range#setStartAfter(refNode) -> undefined
      *  - refNode (Node): Range ends after refNode.
      *  Sets the end of a Range to be after a node
-    **/
+     **/
     function setStartAfter(refNode) {
       this.setStart(refNode.parentNode, _nodeIndex(refNode) + 1);
     }
@@ -277,7 +277,7 @@ if (Prototype.Browser.IE) {
      * Range#setStartBefore(refNode) -> undefined
      *  - refNode (Node): Range ends before refNode
      *  Sets the end position to be before a node.
-    **/
+     **/
     function setStartBefore(refNode) {
       this.setStart(refNode.parentNode, _nodeIndex(refNode));
     }
@@ -288,7 +288,7 @@ if (Prototype.Browser.IE) {
      *      from null.
      *  - offset (Integer): The startOffset value.
      *  Sets the attributes describing the start of the Range.
-    **/
+     **/
     function setEnd(refNode, offset) {
       try {
         this.endContainer = refNode;
@@ -327,7 +327,7 @@ if (Prototype.Browser.IE) {
      * Range#setEndAfter(refNode) -> undefined
      *  - refNode (Node): Range starts after refNode
      *  Sets the start position to be after a node
-    **/
+     **/
     function setEndAfter(refNode) {
       this.setEnd(refNode.parentNode, _nodeIndex(refNode) + 1);
     }
@@ -336,7 +336,7 @@ if (Prototype.Browser.IE) {
      * Range#setEndBefore(refNode) -> undefined
      *  - refNode (Node): Range starts before refNode
      *  Sets the start position to be before a node
-    **/
+     **/
     function setEndBefore(refNode) {
       this.setEnd(refNode.parentNode, _nodeIndex(refNode));
     }
@@ -346,7 +346,7 @@ if (Prototype.Browser.IE) {
      *  - newParent (Node): The node to surround the contents with.
      *  Reparents the contents of the Range to the given node and inserts the
      *  node at the position of the start of the Range.
-    **/
+     **/
     function surroundContents(newParent) {
       try {
         var n, fragment;
