@@ -1042,20 +1042,6 @@ if (Prototype.Browser.IE) {
 
 Object.extend(Range.prototype, (function() {
   function getNode() {
-    function compareRanges(r1, r2) {
-      return !(
-          r2.compareBoundaryPoints(r1.START_TO_START, r1) == 1 &&
-          r2.compareBoundaryPoints(r1.START_TO_END, r1) == 1 &&
-          r2.compareBoundaryPoints(r1.END_TO_END, r1) == 1 &&
-          r2.compareBoundaryPoints(r1.END_TO_START, r1) == 1
-        ||
-          r2.compareBoundaryPoints(r1.START_TO_START, r1) == -1 &&
-          r2.compareBoundaryPoints(r1.START_TO_END, r1) == -1 &&
-          r2.compareBoundaryPoints(r1.END_TO_END, r1) == -1 &&
-          r2.compareBoundaryPoints(r1.END_TO_START, r1) == -1
-      );
-    }
-
     var node = this.commonAncestorContainer;
 
     if (this.startContainer == this.endContainer)
