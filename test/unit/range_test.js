@@ -224,7 +224,6 @@ new Test.Unit.Runner({
     this.range.deleteContents();
 
     runner.assertEqual("", $('lorem').innerHTML, "innerHTML");
-    runner.assertEqual($('content'), this.range.commonAncestorContainer, "commonAncestorContainer")
   },
 
   testExtractContents: function() {
