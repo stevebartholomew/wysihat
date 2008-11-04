@@ -5,36 +5,25 @@ new Test.Unit.Runner({
       "<em id=\"consectetuer\">consectetuer</em> adipiscing elit."
     );
 
-    function getSel() {
-      if (window.getSelection)
-        return window.getSelection();
-      else
-        return document.selection;
-    }
-
-    function getRange() {
-      var selection = getSel();
-      if (selection.getRangeAt)
-        return selection.getRangeAt(0);
-      else
-        return new Range(document);
-    }
-
-    function selectRange(range) {
-      var selection = getSel();
-      selection.removeAllRanges();
-
-      if (Prototype.Browser.IE)
-        selection._addRange(range);
-      else
-        selection.addRange(range);
-    }
-
     var range = document.createRange();
     range.selectNode($('content'));
-    selectRange(range);
 
-    this.range = getRange();
+    if (window.getSelection)
+      var selection = window.getSelection(); // W3C
+    else
+      var selection = document.selection; // IE
+
+    selection.removeAllRanges();
+
+    if (Prototype.Browser.IE)
+      selection._addRange(range); // IE
+    else
+      selection.addRange(range); // W3C
+
+    if (selection.getRangeAt)
+      this.range = selection.getRangeAt(0); // W3C
+    else
+      this.range = new Range(document); // IE
   },
 
   testSetStart: function() {
