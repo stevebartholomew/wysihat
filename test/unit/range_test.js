@@ -9,7 +9,6 @@ new Test.Unit.Runner({
     range.selectNode($('content'));
 
     var selection = window.getSelection();
-
     selection.removeAllRanges();
 
     if (Prototype.Browser.IE)

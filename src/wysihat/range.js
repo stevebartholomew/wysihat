@@ -805,11 +805,43 @@ if (Prototype.Browser.IE) {
   })());
 
   function SelectionImpl() {
+    this.anchorNode = null;
+    this.anchorOffset = 0;
+    this.focusNode = null;
+    this.focusOffset = 0;
+    this.isCollapsed = true;
+    this.rangeCount = 0;
     this.ranges = [];
   }
 
   Object.extend(SelectionImpl.prototype, (function() {
+    function addRange(r) {
+      return true;
+    }
+
+    function collapse() {
+      return true;
+    }
+
+    function collapseToStart() {
+      return true;
+    }
+
+    function collapseToEnd() {
+      return true;
+    }
+
+    function getRangeAt() {
+      return true;
+    }
+
     function removeAllRanges() {
+      this.anchorNode = null;
+      this.anchorOffset = 0;
+      this.focusNode = null;
+      this.focusOffset = 0;
+      this.isCollapsed = true;
+      this.rangeCount = 0;
       this.ranges = [];
     }
 
@@ -1013,7 +1045,13 @@ if (Prototype.Browser.IE) {
     }
 
     return {
+      // addRange: addRange,
+      // collapse: collapse,
+      // collapseToStart: collapseToStart,
+      // collapseToEnd: collapseToEnd,
+      // getRangeAt: getRangeAt,
       removeAllRanges: removeAllRanges,
+
       _addRange: _addRange,
       _getRightStart: _getRightStart,
       _getRightEnd: _getRightEnd,
