@@ -8,10 +8,7 @@ new Test.Unit.Runner({
     var range = document.createRange();
     range.selectNode($('content'));
 
-    if (window.getSelection)
-      var selection = window.getSelection(); // W3C
-    else
-      var selection = document.selection; // IE
+    var selection = window.getSelection();
 
     selection.removeAllRanges();
 
