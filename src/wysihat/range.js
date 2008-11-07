@@ -7,7 +7,7 @@
  * @author Jorgen Horstink <mail@jorgenhorstink.nl>
  **/
 
-if (Prototype.Browser.IE) {
+if (typeof Range == 'undefined') {
   Range = function(ownerDocument) {
     this.ownerDocument = ownerDocument;
 
@@ -803,8 +803,14 @@ if (Prototype.Browser.IE) {
       _commonAncestorContainer: _commonAncestorContainer
     };
   })());
+}
 
-  function SelectionImpl() {
+if (!window.getSelection) {
+  window.getSelection = function() {
+    return Selection.getInstance();
+  };
+
+  SelectionImpl = function() {
     this.anchorNode = null;
     this.anchorOffset = 0;
     this.focusNode = null;
@@ -1070,12 +1076,6 @@ if (Prototype.Browser.IE) {
       }
     };
   };
-
-  if (!window.getSelection) {
-    window.getSelection = function() {
-      return Selection.getInstance();
-    };
-  }
 }
 
 Object.extend(Range.prototype, (function() {
