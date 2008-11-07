@@ -296,5 +296,9 @@ new Test.Unit.Runner({
     this.range.setStart($('lorem'), 0);
     this.range.setEnd($('lorem'), 1);
     runner.assertEqual($('lorem'), this.range.getNode(), "getNode");
+
+    this.range.selectNodeContents($('content'));
+    this.range.collapse(true);
+    runner.assertEqual($('lorem'), this.range.getNode(), "getNode");
   }
 });

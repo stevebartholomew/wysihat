@@ -8,8 +8,6 @@
  **/
 
 if (Prototype.Browser.IE) {
-  // TODO: why does this cause problems in Safari?
-  // function Range(ownerDocument)
   Range = function(ownerDocument) {
     this.ownerDocument = ownerDocument;
 
