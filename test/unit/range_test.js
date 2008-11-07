@@ -282,6 +282,11 @@ new Test.Unit.Runner({
   testGetNode: function() {
     var runner = this;
 
+    if (!this.range.getNode) {
+      runner.flunk("getNode is not implemented");
+      return false;
+    }
+
     this.range.selectNodeContents($('lorem'));
     runner.assertEqual($('lorem'), this.range.getNode(), "getNode");
 
