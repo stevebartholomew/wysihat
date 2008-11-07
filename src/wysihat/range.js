@@ -8,7 +8,9 @@
  **/
 
 if (Prototype.Browser.IE) {
-  function Range(ownerDocument) {
+  // TODO: why does this cause problems in Safari?
+  // function Range(ownerDocument)
+  Range = function(ownerDocument) {
     this.ownerDocument = ownerDocument;
 
     this.startContainer = this.ownerDocument.documentElement;
