@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Prototype API documentation | WysiHat.Toolbar (class)</title>
+	  <meta name="generator" content="PDoc" />
+	  
+	  <script type="text/javascript" charset="utf-8" src="../../javascripts/prototype.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../javascripts/effects.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../javascripts/controls.js"></script>
+	  <script type="text/javascript" charset="utf-8" src="../../javascripts/application.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../javascripts/code_highlighter.js"></script>
+
+	  <script type="text/javascript" charset="utf-8" src="../../javascripts/item_index.js"></script>
+	  
+	  
+	  <link type="text/css" charset="utf-8" rel="stylesheet" href="../../stylesheets/screen.css" media="screen, projection" />
+<link type="text/css" charset="utf-8" rel="stylesheet" href="../../stylesheets/grid.css" media="screen, projection" />
+<link type="text/css" charset="utf-8" rel="stylesheet" href="../../stylesheets/highlighter.css" media="screen, projection" />
+<link type="text/css" charset="utf-8" rel="stylesheet" href="../../stylesheets/main.css" media="screen, projection" />
+	  
+	  <script type="text/javascript" charset="utf-8">
+	    function menuButtonMouseOver(event) {
+	      var menuButton = $('api_menu_button');
+	      var target = event.element();
+	      if (target === menuButton || target.descendantOf(menuButton)) {
+	        $('api_menu').show();
+	        $('search').focus();
+	      }
+	    }
+	    
+	    function menuButtonMouseOut(event) {
+	      var menuButton = $('api_menu_button');
+	      var menu = $('api_menu');
+	      var target = event.element(), related = event.relatedTarget;
+	      
+	      if (related === menu || related.descendantOf(menu)) return;
+	      menu.hide();
+	    }
+	    
+	    function menuMouseOut(event) {
+	      var menu = $('api_menu'), related = event.relatedTarget;
+	      if (related && !related.descendantOf(menu)) {
+	        arguments.callee.timer = Element.hide.delay(0.5, menu);
+	      } else {
+	        window.clearTimeout(arguments.callee.timer)
+	      }
+	    }
+	    
+	    document.observe('dom:loaded', function() {
+   	    $('api_menu_button').observe('mouseover', menuButtonMouseOver);
+   	    $('api_menu_button').observe('mouseout',  menuButtonMouseOut);
+   	    
+   	    $('api_menu').observe('mouseout', menuMouseOut);
+	    });
+	  </script>
+	  
+	  <script type="text/javascript" charset="utf-8">PDoc.pathPrefix = '../../';</script>
+  </head>
+  <body class="">
+    <div id="page">
+      <div id="links_wrapper">
+        <div id="links">
+          <ul id="internal_links">
+            <li class="selected"><a href="#">Home</a></li>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Weblog</a></li>
+          </ul>
+          <ul id="external_links">
+            <li id="scripty_link"><a href="http://script.aculo.us/">script.aculo.us</a></li>
+            <li id="rails_link"><a href="http://www.rubyonrails.org/">Ruby on Rails</a></li>
+          </ul>
+        </div> <!-- #links -->
+      </div> <!-- #links_wrapper -->
+      
+      <div id="masthead">
+        <div id="masthead_content">
+          <h1 onclick="with (document.body) className = className ? '' : 'grid'" id="logo"><span>Prototype JavaScript framework</span></h1>
+        </div> <!-- #masthead_content -->
+      </div> <!-- #masthead -->
+      
+      <div id="menu">
+        <div class="api-box">
+          <h2><a href="#" id="api_menu_button">Menu &darr;</a></h2>
+          
+    			<ul id="api_menu" class="menu-items" style="display: none">
+    				
+    					<li class="current-parent"><a class="current-parent section" href="../../wysihat.html#wysihat-section" title="wysihat (section)">wysihat</a><ul><li><a class=" class" href="../../wysihat/element.html" title="Element (class)"><code>Element</code></a><ul></ul></li>
+<li><a class=" class" href="../../wysihat/range.html" title="Range (class)"><code>Range</code></a><ul></ul></li>
+<li><a class=" class" href="../../wysihat/string.html" title="String (class)"><code>String</code></a><ul></ul></li>
+<li><a class=" class" href="../../wysihat/string.html" title="String (class)"><code>String</code></a><ul></ul></li>
+<li class="current-parent"><a class="current-parent namespace" href="../../wysihat/wysihat.html" title="WysiHat (namespace)"><code>WysiHat</code></a><ul><li><a class=" mixin" href="../../wysihat/wysihat/commands.html" title="WysiHat.Commands (mixin)"><code>WysiHat.Commands</code></a><ul></ul></li>
+<li><a class=" namespace" href="../../wysihat/wysihat/editable.html" title="WysiHat.Editable (namespace)"><code>WysiHat.Editable</code></a><ul><li><a class=" namespace" href="../../wysihat/wysihat/editable/methods.html" title="WysiHat.Editable.Methods (namespace)"><code>WysiHat.Editable.Methods</code></a><ul></ul></li></ul></li>
+<li><a class=" namespace" href="../../wysihat/wysihat/editor.html" title="WysiHat.Editor (namespace)"><code>WysiHat.Editor</code></a><ul></ul></li>
+<li><a class=" mixin" href="../../wysihat/wysihat/persistence.html" title="WysiHat.Persistence (mixin)"><code>WysiHat.Persistence</code></a><ul></ul></li>
+<li><a class=" class" href="../../wysihat/wysihat/selection.html" title="WysiHat.Selection (class)"><code>WysiHat.Selection</code></a><ul></ul></li>
+<li class="current"><a class="current class" href="../../wysihat/wysihat/toolbar.html" title="WysiHat.Toolbar (class)"><code>WysiHat.Toolbar</code></a><ul></ul></li>
+<li><a class=" mixin" href="../../wysihat/wysihat/window.html" title="WysiHat.Window (mixin)"><code>WysiHat.Window</code></a><ul></ul></li>
+<li><a class=" namespace" href="../../wysihat/wysihat/iframe.html" title="WysiHat.iFrame (namespace)"><code>WysiHat.iFrame</code></a><ul><li><a class=" namespace" href="../../wysihat/wysihat/iframe/methods.html" title="WysiHat.iFrame.Methods (namespace)"><code>WysiHat.iFrame.Methods</code></a><ul></ul></li></ul></li></ul></li></ul></li>
+    				
+    			</ul>          
+        </div> <!-- .api-box -->
+
+        <div class="search-box">
+  			  <form>
+    			  <label>Search <input type="text" id="search" size="20" /></label>
+  			  </form>
+  			  <ul id="search_results" class="search-results menu-items" style="display:none"></ul>
+        </div> <!-- .search-box -->
+
+      </div> <!-- #menu -->
+      
+      <div id="main">
+        
+        
+
+
+
+<h2 class="class">
+  <span>class</span>
+  WysiHat.Toolbar
+</h2>
+
+
+
+
+	
+
+	
+
+
+
+
+
+
+
+<div class="section section-method-list">
+  
+    <h3>Methods</h3>
+  
+    <ul class="method-list">
+      
+        <li><a class="instance-method" href="../../wysihat/wysihat/toolbar.html#addbutton-instance_method" title="WysiHat.Toolbar#addButton (instance method)"><code>addButton</code></a></li>
+      
+        <li><a class="instance-method" href="../../wysihat/wysihat/toolbar.html#addbuttonset-instance_method" title="WysiHat.Toolbar#addButtonSet (instance method)"><code>addButtonSet</code></a></li>
+      
+        <li><a class="instance-method" href="../../wysihat/wysihat/toolbar.html#mousedown-instance_method" title="WysiHat.Toolbar#mouseDown (instance method)"><code>mouseDown</code></a></li>
+      
+        <li><a class="instance-method" href="../../wysihat/wysihat/toolbar.html#mousedown-instance_method" title="WysiHat.Toolbar#mouseDown (instance method)"><code>mouseDown</code></a></li>
+      
+        <li><a class="constructor" href="../../wysihat/wysihat/toolbar.html#new-constructor" title="new WysiHat.Toolbar (constructor)"><code>new</code></a></li>
+      
+        <li><a class="instance-method" href="../../wysihat/wysihat/toolbar.html#observebuttonclick-instance_method" title="WysiHat.Toolbar#observeButtonClick (instance method)"><code>observeButtonClick</code></a></li>
+      
+        <li><a class="instance-method" href="../../wysihat/wysihat/toolbar.html#observestatechanges-instance_method" title="WysiHat.Toolbar#observeStateChanges (instance method)"><code>observeStateChanges</code></a></li>
+      
+    </ul>
+  
+    
+  
+</div> <!-- .section -->
+
+
+<div class="section section-constructor">
+  <h3>Constructor</h3>
+  <p>
+    <pre id="new-constructor" class="syntax"><code>new WysiHat.Toolbar(editor[, options])</code></pre>
+  </p>
+  
+  <p><p>Creates a toolbar element above the editor. The WysiHat.Toolbar object
+has many helper methods to easily add buttons to the toolbar.</p>
+
+<p>This toolbar class is not required for the Editor object to function.
+It is merely a set of helper methods to get you started and to build
+on top of.</p>
+
+<p>The options hash accepts a few configuration options.</p>
+
+<ul>
+<li>buttonSet (Array): see WysiHat.Toolbar.ButtonSets.Basic for an example</li>
+<li>position (String): before, after, top, or bottom</li>
+<li>container (String | Element): an id or DOM node of the element to
+insert the Toolbar into. It is inserted before the editor by default.</li>
+</ul></p>
+</div> <!-- .section -->
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="section section-instance_methods">
+      <h3>Instance methods</h3>
+      <ul class="method-details-list">
+        <li><h4 id="addbutton-instance_method">addButton</h4>
+  
+  
+                  <pre class="syntax"><code class="ebnf">WysiHat.Toolbar#addButton(options, handler) -&gt; <code>undefined</code></code></pre>
+
+    
+      <ul class="argument-list">
+        
+          <li>
+            <code>options</code>
+            
+              (<code>Hash</code>)
+            
+             &ndash; Required options hash
+          </li>
+        
+          <li>
+            <code>handler</code>
+            
+              (<code>Function</code>)
+            
+             &ndash; Function to bind to the button
+          </li>
+        
+      </ul>
+    
+  
+  
+  
+  
+  
+	<p>The options hash accepts two required keys, name and label. The label
+value is used as the link's inner text. The name value is set to the
+link's class and is used to check the button state.</p>
+
+<p>toolbar.addButton({
+  name: 'bold', label: "Bold" }, function(editor) {
+    editor.boldSelection();
+});</p>
+
+<p>Would create a link,
+"<a href='#' class='button bold'><span>Bold</span></a>"</p>
+</li>
+
+<li><h4 id="addbuttonset-instance_method">addButtonSet</h4>
+  
+  
+                  <pre class="syntax"><code class="ebnf">WysiHat.Toolbar#addButtonSet(set) -&gt; <code>undefined</code></code></pre>
+
+    
+      <ul class="argument-list">
+        
+          <li>
+            <code>set</code>
+            
+              (<code>Array</code>)
+            
+             &ndash; The set array contains nested arrays that hold the button options, and handler.
+          </li>
+        
+      </ul>
+    
+  
+  
+  
+  
+  
+	<p>Adds a button set to the toolbar.</p>
+
+<p>WysiHat.Toolbar.ButtonSets.Basic is a built in button set,
+that looks like:
+[
+  [{ name: 'bold', label: "Bold" }, function(editor) {
+    editor.boldSelection();
+  }],
+  [{ name: 'underline', label: "Underline" }, function(editor) {
+    editor.underlineSelection();
+  }],
+  [{ name: 'italic', label: "Italic" }, function(editor) {
+    editor.italicSelection();
+  }]
+]</p>
+</li>
+
+<li><h4 id="mousedown-instance_method">mouseDown</h4>
+  
+  
+                  <pre class="syntax"><code class="ebnf">WysiHat.Toolbar#mouseDown(event) -&gt; <code>undefined</code></code></pre>
+
+    
+  
+  
+  
+  
+  
+	<ul>
+<li>event (Event)
+This function is triggered when the user clicks their mouse down on
+the toolbar element. For now, it only updates the hasMouseDown property
+to true.</li>
+</ul>
+</li>
+
+<li><h4 id="mousedown-instance_method">mouseDown</h4>
+  
+  
+                  <pre class="syntax"><code class="ebnf">WysiHat.Toolbar#mouseDown(event) -&gt; <code>undefined</code></code></pre>
+
+    
+  
+  
+  
+  
+  
+	<ul>
+<li>event (Event)
+This function is triggered when the user releases their mouse from
+the toolbar element. It resets the hasMouseDown property back to false
+and refocuses on the editing window.</li>
+</ul>
+</li>
+
+<li><h4 id="observebuttonclick-instance_method">observeButtonClick</h4>
+  
+  
+                  <pre class="syntax"><code class="ebnf">WysiHat.Toolbar#observeButtonClick(element, handler) -&gt; <code>undefined</code></code></pre>
+
+    
+      <ul class="argument-list">
+        
+          <li>
+            <code>element</code>
+            
+              (<a href="../../wysihat/string.html" title="String (class)"><code>String</code></a> | <a href="../../wysihat/element.html" title="Element (class)"><code>Element</code></a>)
+            
+             &ndash; Element to bind handler to
+          </li>
+        
+          <li>
+            <code>handler</code>
+            
+              (<code>Function</code>)
+            
+             &ndash; Function to bind to the element fires wysihat:change
+          </li>
+        
+      </ul>
+    
+  
+  
+  
+  
+  
+	<p>In addition to binding the given handler to the element, this observe
+function also sets up a few more events. When the elements onclick is
+fired, the toolbars hasMouseDown property will be set to true and
+back to false on exit.</p>
+</li>
+
+<li><h4 id="observestatechanges-instance_method">observeStateChanges</h4>
+  
+  
+                  <pre class="syntax"><code class="ebnf">WysiHat.Toolbar#observeStateChanges(element, command) -&gt; <code>undefined</code></code></pre>
+
+    
+      <ul class="argument-list">
+        
+          <li>
+            <code>element</code>
+            
+              (<a href="../../wysihat/string.html" title="String (class)"><code>String</code></a> | <a href="../../wysihat/element.html" title="Element (class)"><code>Element</code></a>)
+            
+             &ndash; Element to receive changes
+          </li>
+        
+          <li>
+            <code>command</code>
+            
+              (<a href="../../wysihat/string.html" title="String (class)"><code>String</code></a>)
+            
+             &ndash; Name of editor command to observe
+          </li>
+        
+      </ul>
+    
+  
+  
+  
+  
+  
+	<p>Adds the class "selected" to the given Element when the selected text
+matches the command.</p>
+
+<p>toolbar.observeStateChanges(buttonElement, 'bold')
+would add the class "selected" to the buttonElement when the editor's
+selected text was bold.</p>
+</li>
+
+      </ul>    
+    </div> <!-- .section -->
+  
+
+  
+  
+
+
+
+
+      </div> <!-- #main -->
+            
+    </div> <!-- #page -->
+
+</body>
+</html>
