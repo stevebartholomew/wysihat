@@ -10,7 +10,7 @@ new Test.Unit.Runner({
       ['<p class="greeting">Hello</p>\n<p>World</p>', '<P class="greeting">Hello</P>\n<P>World</P>'],
       ['Hello<br />\nWorld', 'Hello<BR>\r\nWorld']
     ].each(function(assertion) {
-      runner.assertEqual(assertion[0], assertion[1].tidy_xhtml());
+      runner.assertEqual(assertion[0], assertion[1].tidyXHTML());
     });
   },
 
@@ -47,7 +47,7 @@ new Test.Unit.Runner({
 
         ["<p><img src=\"http://www.google.com/intl/en_ALL/images/logo.gif\"></p>", "<img src=\"http://www.google.com/intl/en_ALL/images/logo.gif\">"]
       ].each(function(assertion) {
-        runner.assertEqual(assertion[0], assertion[1].format_html_output());
+        runner.assertEqual(assertion[0], assertion[1].formatHTMLOutput());
       });
     } else if (Prototype.Browser.Gecko) {
       [
@@ -74,7 +74,7 @@ new Test.Unit.Runner({
 
         ["<p><img src=\"http://www.google.com/intl/en_ALL/images/logo.gif\"></p>", "<img src=\"http://www.google.com/intl/en_ALL/images/logo.gif\">"]
       ].each(function(assertion) {
-        runner.assertEqual(assertion[0], assertion[1].format_html_output());
+        runner.assertEqual(assertion[0], assertion[1].formatHTMLOutput());
       });
     } else if (Prototype.Browser.IE) {
       [
@@ -100,7 +100,7 @@ new Test.Unit.Runner({
         ['<p>Some <u>underlined</u> text</p>',
           'Some <U>underlined</U> text']
       ].each(function(assertion) {
-        runner.assertEqual(assertion[0], assertion[1].format_html_output());
+        runner.assertEqual(assertion[0], assertion[1].formatHTMLOutput());
       });
     } else if (Prototype.Browser.Opera) {
       [
@@ -111,7 +111,7 @@ new Test.Unit.Runner({
         ['<p>Here is some basic text...<br />\n...with a line break.</p>\n\n<p>We want to put a paragraph...</p>\n\n<p>...right there.</p>',
           '<P>Here is some basic text...</P>\n<P>...with a line break.</P>\n<P> </P>\n<P>We want to put a paragraph...</P>\n<P> </P>\n<P>...right there.</P>']
       ].each(function(assertion) {
-        runner.assertEqual(assertion[0], assertion[1].format_html_output());
+        runner.assertEqual(assertion[0], assertion[1].formatHTMLOutput());
       });
     }
   },
@@ -135,7 +135,7 @@ new Test.Unit.Runner({
         ['<div>Some <span style="font-style: italic;" class="Apple-style-span"><span style="font-weight: bold;" class="Apple-style-span">italic and bold</span></span> text</div>',
           '<p>Some <em><strong>italic and bold</strong></em> text</p>']
       ].each(function(assertion) {
-        runner.assertEqual(assertion[0], assertion[1].format_html_input());
+        runner.assertEqual(assertion[0], assertion[1].formatHTMLInput());
       });
     } else if (Prototype.Browser.Gecko) {
       [
@@ -153,21 +153,21 @@ new Test.Unit.Runner({
         ['Some <span style="font-style: italic;"><span style="font-weight: bold;">italic and bold</span></span> text<br>',
           '<p>Some <em><strong>italic and bold</strong></em> text</p>']
       ].each(function(assertion) {
-        runner.assertEqual(assertion[0], assertion[1].format_html_input());
+        runner.assertEqual(assertion[0], assertion[1].formatHTMLInput());
       });
     } else if (Prototype.Browser.IE) {
       [
         [ '<p>Here is some basic text...</p>\n<p>...with a line break.</p>\n<p>&nbsp;</p>\n<p>We want to put a paragraph...</p>\n<p>&nbsp;</p>\n<p>...right there.</p>',
           '<p>Here is some basic text...<br />\n...with a line break.</p>\n\n<p>We want to put a paragraph...</p>\n\n<p>...right there.</p>']
       ].each(function(assertion) {
-        runner.assertEqual(assertion[0], assertion[1].format_html_input());
+        runner.assertEqual(assertion[0], assertion[1].formatHTMLInput());
       });
     } else if (Prototype.Browser.Opera) {
       [
         [ '<p>Here is some basic text...</p>\n<p>...with a line break.</p>\n<p>&nbsp;</p>\n<p>We want to put a paragraph...</p>\n<p>&nbsp;</p>\n<p>...right there.</p>',
           '<p>Here is some basic text...<br />\n...with a line break.</p>\n\n<p>We want to put a paragraph...</p>\n\n<p>...right there.</p>']
       ].each(function(assertion) {
-        runner.assertEqual(assertion[0], assertion[1].format_html_input());
+        runner.assertEqual(assertion[0], assertion[1].formatHTMLInput());
       });
     }
   }

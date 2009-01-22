@@ -1,4 +1,4 @@
-/**
+/** section: wysihat
  * mixin WysiHat.Window
  *
  *  Methods will be mixed into the editor element. These methods handle window

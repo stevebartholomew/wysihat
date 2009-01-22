@@ -1,10 +1,12 @@
-/**
- * This document is work in progress. It implements w3c Range for browsers
+/** section: wysihat
+ * class Range
+ *
+ * This document is work in progress. It implements W3C Range for browsers
  * that do not support it natively like Internet Explorer. The implementation
- * is cross-browser compatible but only gets binded if no w3c Range
+ * is cross-browser compatible but only gets binded if no W3C Range
  * implementation exists.
  *
- * @author Jorgen Horstink <mail@jorgenhorstink.nl>
+ * Originally created by Jorgen Horstink <mail@jorgenhorstink.nl>
  **/
 
 if (typeof Range == 'undefined') {

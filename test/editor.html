@@ -26,7 +26,7 @@
     }
   </style>
 
-  <script type="text/javascript" src="../vendor/prototype.js"></script>
+  <script type="text/javascript" src="../dist/prototype.js"></script>
   <script type="text/javascript" src="../dist/wysihat.js"></script>
 
   <script type="text/javascript" charset="utf-8">
@@ -39,7 +39,7 @@
       toolbar.addButtonSet(WysiHat.Toolbar.ButtonSets.Basic);
 
       editor.outputFilter = function(text) {
-        return text.format_html_output().sanitize({
+        return text.formatHTMLOutput().sanitize({
           tags: ['span', 'p', 'br', 'strong', 'em', 'u', 'a'],
           attributes: ['id', 'href']
         });

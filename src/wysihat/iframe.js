@@ -1,3 +1,7 @@
+/** section: wysihat
+ * WysiHat.iFrame
+ *  includes WysiHat.Commands, WysiHat.Persistence, WysiHat.Window, WysiHat.iFrame.Methods
+ **/
 WysiHat.iFrame = {
   create: function(textarea, callback) {
     var editArea = new Element('iframe', { 'id': textarea.id + '_editor', 'class': 'editor' });
@@ -15,6 +19,9 @@ WysiHat.iFrame = {
   }
 };
 
+/** section: wysihat
+ * WysiHat.iFrame.Methods
+ **/
 WysiHat.iFrame.Methods = {
   attach: function(element, callback) {
     this.textarea = element;
@@ -41,8 +48,8 @@ WysiHat.iFrame.Methods = {
 
   /**
    * WysiHat.iFrame.Methods#setStyle(styles) -> HTMLElement
-   *  - styles (Hash): Styles are passed as a hash of property-value pairs in
-   * which the properties are specified in their camelized form.
+   * - styles (Hash): Styles are passed as a hash of property-value pairs in
+   *  which the properties are specified in their camelized form.
    *
    *  Sets the style of the body element inside the iFrame. You can use this to
    *  change the font size and family of the editable text. This method also

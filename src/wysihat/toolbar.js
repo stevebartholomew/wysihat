@@ -1,11 +1,11 @@
-/**
+/** section: wysihat
  * class WysiHat.Toolbar
  **/
 WysiHat.Toolbar = Class.create((function() {
   /**
    * new WysiHat.Toolbar(editor[, options])
-   *  - editor (WysiHat.Editor): the editor object that you want to attach to
-   *  - options (Hash): options for configuring the Toolbar
+   * - editor (WysiHat.Editor): the editor object that you want to attach to
+   * - options (Hash): options for configuring the Toolbar
    *
    *  Creates a toolbar element above the editor. The WysiHat.Toolbar object
    *  has many helper methods to easily add buttons to the toolbar.
@@ -54,8 +54,8 @@ WysiHat.Toolbar = Class.create((function() {
 
   /**
    * WysiHat.Toolbar#addButtonSet(set) -> undefined
-   *  - set (Array): The set array contains nested arrays that hold the
-   *  button options, and handler.
+   * - set (Array): The set array contains nested arrays that hold the
+   *   button options, and handler.
    *
    *  Adds a button set to the toolbar.
    *
@@ -86,8 +86,8 @@ WysiHat.Toolbar = Class.create((function() {
 
   /**
    * WysiHat.Toolbar#addButton(options, handler) -> undefined
-   *  - options (Hash): Required options hash
-   *  - handler (Function): Function to bind to the button
+   * - options (Hash): Required options hash
+   * - handler (Function): Function to bind to the button
    *
    *  The options hash accepts two required keys, name and label. The label
    *  value is used as the link's inner text. The name value is set to the
@@ -115,9 +115,9 @@ WysiHat.Toolbar = Class.create((function() {
 
   /**
    * WysiHat.Toolbar#observeButtonClick(element, handler) -> undefined
-   *  - element (String | Element): Element to bind handler to
-   *  - handler (Function): Function to bind to the element
-   *  fires wysihat:change
+   * - element (String | Element): Element to bind handler to
+   * - handler (Function): Function to bind to the element
+   *   fires wysihat:change
    *
    *  In addition to binding the given handler to the element, this observe
    *  function also sets up a few more events. When the elements onclick is
@@ -138,8 +138,8 @@ WysiHat.Toolbar = Class.create((function() {
 
   /**
    * WysiHat.Toolbar#observeStateChanges(element, command) -> undefined
-   *  - element (String | Element): Element to receive changes
-   *  - command (String): Name of editor command to observe
+   * - element (String | Element): Element to receive changes
+   * - command (String): Name of editor command to observe
    *
    *  Adds the class "selected" to the given Element when the selected text
    *  matches the command.
@@ -149,18 +149,21 @@ WysiHat.Toolbar = Class.create((function() {
    *  selected text was bold.
    **/
   function observeStateChanges(element, command) {
-    this.editArea.observe("wysihat:mousemove", function(event) {
+    fun = function(event) {
       if (event.target.queryCommandState(command))
         element.addClassName('selected');
       else
         element.removeClassName('selected');
-    });
+    };
+    
+    this.editArea.observe("wysihat:change", fun);
+    this.editArea.observe("wysihat:mousemove", fun);
     return this;
   }
 
   /**
    * WysiHat.Toolbar#mouseDown(event) -> undefined
-   *  - event (Event)
+   * - event (Event)
    *  This function is triggered when the user clicks their mouse down on
    *  the toolbar element. For now, it only updates the hasMouseDown property
    *  to true.
@@ -171,7 +174,7 @@ WysiHat.Toolbar = Class.create((function() {
 
   /**
    * WysiHat.Toolbar#mouseDown(event) -> undefined
-   *  - event (Event)
+   * - event (Event)
    *  This function is triggered when the user releases their mouse from
    *  the toolbar element. It resets the hasMouseDown property back to false
    *  and refocuses on the editing window.
@@ -195,7 +198,7 @@ WysiHat.Toolbar = Class.create((function() {
 
 WysiHat.Toolbar.ButtonSets = {};
 
-/**
+/** section: wysihat
  * WysiHat.Toolbar.ButtonSets.Basic = $A([
  *    [{ name: 'bold', label: "Bold" }, function(editor) {
  *      editor.boldSelection();
